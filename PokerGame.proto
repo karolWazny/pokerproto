@@ -4,15 +4,19 @@ option go_package = "grpc/game";
 package online.niepowazni.poker;
 
 enum MessageType {
-  EVENT = 0;
-  PING = 1;
+  PING = 0;
+  EVENT = 1;
 }
 
 enum GameEventType {
-  STREET_UPDATE = 0;
+  NOOP = 0;
+  STREET_UPDATE = 1;
+  PLAYER_TO_ACT = 2;
+  PLAYER_ACTED = 3;
+  NEW_DEAL = 4;
 }
 
-enum GameActionType {
+enum PlayerActionType {
   CHECK = 0;
   FOLD = 1;
   BET = 2;
@@ -23,14 +27,40 @@ enum GameActionResponseCode {
   OK = 0;
 }
 
+message PlayerAction {
+  PlayerActionType actionType = 1;
+  optional int64 value = 2;
+}
+
+message PlayerPossibleAction {
+  PlayerActionType actionType = 1;
+  optional int64 lowerBound = 3;
+  optional int64 upperBound = 4;
+}
+
 message Event {
   MessageType metatype = 1;
-  GameEvent eventData = 2;
+  optional GameEvent eventData = 2;
+}
+
+message NewDealData {
+  string smallBlindPlayer = 1;
+  int64 smallBlindStack = 2;
+  string bigBlindPlayer = 3;
+  int64 bigBlindStack = 4;
+  string buttonPlayer = 5;
+  string underTheGunPlayer = 6;
+  int64 stack = 7;
+  int64 bigBlind = 8;
+  int64 smallBlind = 9;
 }
 
 message GameEvent {
   GameEventType gameEventType = 1;
   repeated Card communityCards = 2;
+  repeated PlayerPossibleAction possibleActions = 3;
+  optional PlayerAction action = 4;
+  optional NewDealData newDealData = 5;
 }
 
 message PokerGameHello {
@@ -43,7 +73,7 @@ message Card {
 }
 
 message GameAction {
-  GameActionType type = 1;
+  PlayerActionType type = 1;
 }
 
 message GameActionResponse {
