@@ -25,6 +25,7 @@ enum PlayerActionType {
   CALL = 3;
 }
 
-enum GameActionResponseCode {
+enum ResponseCode {
   OK = 0;
+  ERROR = 1;
 }

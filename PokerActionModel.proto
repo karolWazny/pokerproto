@@ -11,7 +11,7 @@ message JoinPokerGameRequest {
 }
 
 message JoinPokerGameResponse {
-
+  ResponseCode code = 1;
 }
 
 message PokerGameHello {
@@ -23,6 +23,6 @@ message GameAction {
 }
 
 message GameActionResponse {
-  GameActionResponseCode code = 1;
+  ResponseCode code = 1;
   string description = 2;
 }
