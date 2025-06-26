@@ -9,4 +9,5 @@ import "PokerEventModel.proto";
 service PokerGameService {
   rpc observeEvents(PokerGameHello) returns (stream Event);
   rpc perform(GameAction) returns (GameActionResponse);
+  rpc join(JoinPokerGameRequest) returns (JoinPokerGameResponse);
 }

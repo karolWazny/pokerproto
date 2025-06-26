@@ -5,9 +5,19 @@ package online.niepowazni.poker;
 
 import "PokerCommonModel.proto";
 
+message JoinPokerGameRequest {
+  string username = 1;
+  int64 buyIn = 2;
+}
+
+message JoinPokerGameResponse {
+
+}
+
 message PokerGameHello {
 
 }
+
 message GameAction {
   PlayerActionType type = 1;
 }
